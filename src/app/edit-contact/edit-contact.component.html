@@ -1,0 +1,53 @@
+<div class="content">
+  <h1 class="header">
+    Edit Contact
+  </h1>
+  <form [formGroup]="contactForm" (ngSubmit)="saveContact()">
+    <section>
+      <nav>Name/Info</nav>
+      <div>
+        <input formControlName="lastName" placeholder="Last Name" />
+        <input formControlName="dateOfBirth" placeholder="Date of Birth" />
+        <input formControlName="favoritesRanking" placeholder="Favorites Ranking" />
+        <input formControlName="firstName" placeholder="First Name" />
+      </div>
+    </section>
+    <section>
+      <nav>Phone</nav>
+      <div formGroupName="phone" class="flex-column">
+        <div class="flex-group">
+          <input formControlName="phoneNumber" placeholder="Phone" />
+          <img src="/assets/plus-grey-blue.png" class="add" />
+        </div>
+        <div class="radio">
+          <input formControlName="phoneType" type="radio" value="mobile"> Mobile
+          <input formControlName="phoneType" type="radio" value="work"> Work
+          <input formControlName="phoneType" type="radio" value="other"> Other
+        </div>
+      </div>
+    </section>
+    <section>
+      <nav>Address</nav>
+      <div>
+        <div formGroupName="address" class="address">
+          <div class="flex-group">
+            <input formControlName="streetAddress" placeholder="Address" />
+            <img src="/assets/plus-grey-blue.png" class="add" />
+          </div>
+          <input formControlName="city" placeholder="City" />
+          <input formControlName="state" placeholder="State/Region" />
+          <input formControlName="postalCode" placeholder="Zip/Postal Code" />
+          <select>
+            <option formControlName="addressType" value="home">Home</option>
+            <option formControlName="addressType" value="work">Work</option>
+            <option formControlName="addressType" value="mobile">Other</option>
+          </select>
+        </div>
+      </div>
+    </section>
+    <div class="buttons">
+      <button class="secondary">Cancel</button>
+      <button type="submit" class="primary">Save</button>
+    </div>
+  </form>
+</div>
