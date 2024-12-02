@@ -1,17 +1,35 @@
 <div class="content">
-  <h1 class="header">
-    Edit Contact
-  </h1>
+  <h1 class="header">Edit Contact</h1>
   <form [formGroup]="contactForm" (ngSubmit)="saveContact()">
     <section>
       <nav>Name/Info</nav>
       <div>
         <input formControlName="lastName" placeholder="Last Name" />
         <input formControlName="dateOfBirth" placeholder="Date of Birth" />
-        <input formControlName="favoritesRanking" placeholder="Favorites Ranking" />
+        <div>
+          <span>Favorites Ranking:</span>
+          <input
+            type="range"
+            min="0"
+            max="5"
+            formControlName="favoritesRanking"
+            placeholder="Favorites Ranking"
+          />
+          <span>{{ contactForm.get("favoritesRanking")?.value }}</span>
+        </div>
         <input formControlName="firstName" placeholder="First Name" />
+        <div class="personal">
+          <label for="personal">Personal:</label>
+          <input
+            id="personal"
+            type="checkbox"
+            formControlName="isPersonal"
+            placeholder="Personal"
+          />
+        </div>
       </div>
     </section>
+
     <section>
       <nav>Phone</nav>
       <div formGroupName="phone" class="flex-column">
@@ -20,12 +38,20 @@
           <img src="/assets/plus-grey-blue.png" class="add" />
         </div>
         <div class="radio">
-          <input formControlName="phoneType" type="radio" value="mobile"> Mobile
-          <input formControlName="phoneType" type="radio" value="work"> Work
-          <input formControlName="phoneType" type="radio" value="other"> Other
+          <ng-container
+            *ngFor="let phoneType of phoneTypes; trackBy: typeTracker"
+          >
+            <input
+              formControlName="phoneType"
+              type="radio"
+              [value]="phoneType.value"
+            />
+            {{ phoneType.title }}
+          </ng-container>
         </div>
       </div>
     </section>
+
     <section>
       <nav>Address</nav>
       <div>
@@ -37,12 +63,27 @@
           <input formControlName="city" placeholder="City" />
           <input formControlName="state" placeholder="State/Region" />
           <input formControlName="postalCode" placeholder="Zip/Postal Code" />
-          <select>
-            <option formControlName="addressType" value="home">Home</option>
-            <option formControlName="addressType" value="work">Work</option>
-            <option formControlName="addressType" value="mobile">Other</option>
+          <select formControlName="addressType">
+            <option
+              *ngFor="let addressType of addressTypes; trackBy: typeTracker"
+              [value]="addressType.value"
+            >
+              {{ addressType.title }}
+            </option>
           </select>
         </div>
+      </div>
+    </section>
+    <section>
+      <nav>Notes</nav>
+      <div>
+        <textarea
+          name="notes"
+          id="notes"
+          rows="6"
+          formControlName="notes"
+          placeholder="Notes"
+        ></textarea>
       </div>
     </section>
     <div class="buttons">

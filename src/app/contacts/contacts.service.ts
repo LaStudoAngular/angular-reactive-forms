@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import { Contact } from './contact.model';
+import { Contact, IAddressType, IPhoneType } from './contact.model';
 import { nanoid } from 'nanoid';
 
 @Injectable({
@@ -35,4 +35,16 @@ export class ContactsService {
       return this.http.put<Contact>('api/contacts/', contact, headers);
     }
   }
+
+  public phoneTypes: IPhoneType[] = [
+    { title: 'Mobile', value: 'mobile' },
+    { title: 'Work', value: 'work' },
+    { title: 'Other', value: 'other' },
+  ];
+
+  public addressTypes: IAddressType[] = [
+    { title: 'Home', value: 'home' },
+    { title: 'Work', value: 'work' },
+    { title: 'Other', value: 'other' },
+  ];
 }

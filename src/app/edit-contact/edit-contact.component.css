@@ -32,7 +32,7 @@ section:last-child nav {
   border-bottom: none;
 }
 
-section>div {
+section > div {
   display: flex;
   flex-direction: column;
   padding: 10px 20px;
@@ -92,7 +92,7 @@ section div {
 
 .flex-group {
   display: flex;
-  align-items: center
+  align-items: center;
 }
 
 .flex-group input {
@@ -123,4 +123,9 @@ section div em {
 
 .buttons * {
   flex: 1 1 auto;
+}
+
+.personal {
+  display: flex;
+  align-items: center;
 }
