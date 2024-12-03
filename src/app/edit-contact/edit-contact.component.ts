@@ -57,9 +57,15 @@ export class EditContactComponent implements OnInit {
   }
 
   public saveContact(): void {
-    /** Два способа получить значения вложенных (nested) полей формы */
+    /** Три способа получить значения вложенных (nested) полей формы */
     // this.contactForm.get('phone.phoneNumber')
     // this.contactForm.get(['phone', 'phoneNumber'])?.value
+    // this.contactForm.get('phone')?.get('phoneNumber')?.value
+
+    console.log(
+      "this.contactForm.get('phone')?.get('phoneNumber')",
+      this.contactForm.get('phone')?.get('phoneNumber')?.value
+    );
 
     this.contactsService.saveContact(this.contactForm.getRawValue()).subscribe({
       next: () => this.router.navigate(['/contacts']),
