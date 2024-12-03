@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContactsService } from '../contacts/contacts.service';
 import { Contact, IAddressType, IPhoneType } from '../contacts/contact.model';
+import { restrictedWordsValidator } from '../validators/restricted-words.validator';
 
 type TypeTracker = IPhoneType | IAddressType;
 
@@ -24,7 +25,7 @@ export class EditContactComponent implements OnInit {
   public contactForm = this.fb.nonNullable.group({
     id: '',
     isPersonal: false,
-    firstName: '',
+    firstName: ['', [Validators.required, Validators.minLength(3)]],
     lastName: '',
     dateOfBirth: <Date | null>null,
     favoritesRanking: <number | null>null,
@@ -33,16 +34,16 @@ export class EditContactComponent implements OnInit {
       phoneType: '',
     }),
     address: this.fb.nonNullable.group({
-      streetAddress: '',
-      city: '',
-      state: '',
-      postalCode: '',
-      addressType: '',
+      streetAddress: ['', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      postalCode: ['', Validators.required],
+      addressType: ['', Validators.required],
     }),
-    notes: '',
+    notes: ['', restrictedWordsValidator(['bad', 'ugly', 'stupid'])],
   });
 
-  ngOnInit() {
+  ngOnInit(): void {
     const contactId = this.route.snapshot.params['id'];
     if (!contactId) return;
 
@@ -63,6 +64,18 @@ export class EditContactComponent implements OnInit {
     this.contactsService.saveContact(this.contactForm.getRawValue()).subscribe({
       next: () => this.router.navigate(['/contacts']),
     });
+  }
+
+  public get firstNameControl(): FormControl {
+    return this.contactForm.get('firstName') as FormControl;
+  }
+
+  public get addressControl(): FormControl {
+    return this.contactForm.get(['address']) as FormControl;
+  }
+
+  public get notesControl(): FormControl {
+    return this.contactForm.get(['notes']) as FormControl;
   }
 
   public typeTracker(_: number, type: TypeTracker): string {

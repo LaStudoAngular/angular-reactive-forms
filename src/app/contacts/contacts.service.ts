@@ -8,9 +8,9 @@ import { nanoid } from 'nanoid';
   providedIn: 'root',
 })
 export class ContactsService {
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
-  getContact(id: string): Observable<Contact | undefined> {
+  public getContact(id: string): Observable<Contact | undefined> {
     return this.http.get<Contact>(`api/contacts/${id}`).pipe(
       map((c) => {
         const dob = c.dateOfBirth ? new Date(c.dateOfBirth) : null;
@@ -20,7 +20,7 @@ export class ContactsService {
     );
   }
 
-  getAllContacts(): Observable<Contact[]> {
+  public getAllContacts(): Observable<Contact[]> {
     return this.http.get<Contact[]>('api/contacts');
   }
 

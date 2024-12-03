@@ -4,6 +4,21 @@
     <section>
       <nav>Name/Info</nav>
       <div>
+        <ng-container>
+          <input
+            [class.error]="firstNameControl.invalid && firstNameControl.touched"
+            formControlName="firstName"
+            placeholder="First Name"
+          />
+          <em
+            *ngIf="firstNameControl.errors?.['required'] && firstNameControl.touched"
+            >Please enter a first name</em
+          >
+          <em
+            *ngIf="firstNameControl.errors?.['minlength'] && firstNameControl.touched"
+            >Field must contains at least 3 characters</em
+          >
+        </ng-container>
         <input formControlName="lastName" placeholder="Last Name" />
         <input formControlName="dateOfBirth" placeholder="Date of Birth" />
         <div>
@@ -17,7 +32,6 @@
           />
           <span>{{ contactForm.get("favoritesRanking")?.value }}</span>
         </div>
-        <input formControlName="firstName" placeholder="First Name" />
         <div class="personal">
           <label for="personal">Personal:</label>
           <input
@@ -55,7 +69,11 @@
     <section>
       <nav>Address</nav>
       <div>
-        <div formGroupName="address" class="address">
+        <div
+          formGroupName="address"
+          class="address"
+          [class.error]="addressControl.invalid && addressControl.dirty"
+        >
           <div class="flex-group">
             <input formControlName="streetAddress" placeholder="Address" />
             <img src="/assets/plus-grey-blue.png" class="add" />
@@ -72,6 +90,9 @@
             </option>
           </select>
         </div>
+        <em *ngIf="addressControl.invalid && addressControl.dirty"
+          >Address in not complete!</em
+        >
       </div>
     </section>
     <section>
@@ -83,12 +104,19 @@
           rows="6"
           formControlName="notes"
           placeholder="Notes"
+          [class.error]="notesControl.invalid"
         ></textarea>
+        <em *ngIf="notesControl.errors?.['restricted']"
+          >Restricted words found:
+          {{ notesControl.errors?.['restricted'] }}!</em
+        >
       </div>
     </section>
     <div class="buttons">
       <button class="secondary">Cancel</button>
-      <button type="submit" class="primary">Save</button>
+      <button type="submit" class="primary" [disabled]="contactForm.invalid">
+        Save
+      </button>
     </div>
   </form>
 </div>
