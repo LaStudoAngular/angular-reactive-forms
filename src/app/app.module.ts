@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -8,10 +9,15 @@ import { AppComponent } from './app.component';
 import { ContactListComponent } from './contact-list/contact-list.component';
 import { EditContactComponent } from './edit-contact/edit-contact.component';
 import { InMemoryContactsApi } from './contacts/in-memory-contacts.service';
-import { ReactiveFormsModule } from '@angular/forms';
+import { DateValueAccessorDirective } from './date-value-accessor/date-value-accessor.directive';
 
 @NgModule({
-  declarations: [AppComponent, ContactListComponent, EditContactComponent],
+  declarations: [
+    AppComponent,
+    ContactListComponent,
+    EditContactComponent,
+    DateValueAccessorDirective,
+  ],
   imports: [
     ReactiveFormsModule,
     BrowserModule,

@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Contact, IAddressType, IPhoneType } from './contact.model';
@@ -28,12 +28,12 @@ export class ContactsService {
     const headers = { headers: { 'Content-Type': 'application/json' } };
 
     if (!contact.id || contact.id === '') {
-      let newContact: Partial<Contact> = { ...contact, id: nanoid(5) };
+      const newContact: Partial<Contact> = { ...contact, id: nanoid(5) };
 
       return this.http.post<Contact>('api/contacts/', newContact, headers);
-    } else {
-      return this.http.put<Contact>('api/contacts/', contact, headers);
     }
+
+    return this.http.put<Contact>('api/contacts/', contact, headers);
   }
 
   public phoneTypes: IPhoneType[] = [
