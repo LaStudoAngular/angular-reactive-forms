@@ -1,0 +1,23 @@
+<ng-container *ngTemplateOutlet="showAllIcons ? allIconsTemplate : selectedIconTemplate"></ng-container>
+
+<ng-template #allIconsTemplate>
+    <ul>
+        <li *ngFor="let icon of profileIcons">
+            <img
+                [src]="'/assets/profile/' + icon"
+                [alt]="icon"
+                [class.selected]="icon === selectedIcon"
+                (click)="onSelectIcon(icon)"
+            />
+        </li>
+    </ul>
+</ng-template>
+
+<ng-template #selectedIconTemplate>
+    <img
+        [src]="'/assets/profile/' + selectedIcon"
+        [alt]="selectedIcon"
+        (click)="showAllIcons = true"
+    />
+</ng-template>
+
