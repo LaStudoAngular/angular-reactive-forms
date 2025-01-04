@@ -1,4 +1,4 @@
-<ng-container *ngTemplateOutlet="showAllIcons ? allIconsTemplate : selectedIconTemplate"></ng-container>
+<ng-container *ngTemplateOutlet="showAllIcons() ? allIconsTemplate : selectedIconTemplate"></ng-container>
 
 <ng-template #allIconsTemplate>
     <ul>
@@ -17,7 +17,7 @@
     <img
         [src]="'/assets/profile/' + selectedIcon"
         [alt]="selectedIcon"
-        (click)="showAllIcons = true"
+        (click)="showIcons()"
     />
 </ng-template>
 
