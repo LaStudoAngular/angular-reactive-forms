@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContactsService } from '../contacts/contacts.service';
 import {
   Contact,
+  IAddressGroup,
   IAddressType,
   IPhoneGroup,
   IPhoneType,
@@ -41,13 +37,7 @@ export class EditContactComponent implements OnInit {
     dateOfBirth: <Date | null>null,
     favoritesRanking: <number | null>null,
     phones: this.fb.array<FormGroup<IPhoneGroup>>([]),
-    address: this.fb.nonNullable.group({
-      streetAddress: ['', Validators.required],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
-      postalCode: ['', Validators.required],
-      addressType: ['', Validators.required],
-    }),
+    addresses: this.fb.array<FormGroup<IAddressGroup>>([]),
     notes: ['', restrictedWordsValidator(['bad', 'ugly', 'stupid'])],
   });
 
@@ -62,6 +52,7 @@ export class EditContactComponent implements OnInit {
 
         // динамически добавляем в form array контролы из модели
         contact.phones.forEach(() => this.addPhoneControl());
+        contact.addresses.forEach(() => this.addAddressControl());
 
         // заполняем все контролы формы данными из модели
         this.contactForm.setValue(contact);
@@ -70,6 +61,10 @@ export class EditContactComponent implements OnInit {
 
   public addPhoneControl(): void {
     this.contactForm.controls.phones.push(this.createPhoneGroup());
+  }
+
+  public addAddressControl(): void {
+    this.contactForm.controls.addresses.push(this.createAddressGroup());
   }
 
   public typeTracker(_: number, type: TypeTracker): string {
@@ -92,6 +87,17 @@ export class EditContactComponent implements OnInit {
     return this.fb.nonNullable.group({
       phoneNumber: '',
       phoneType: '',
+    });
+  }
+
+  // создаем контрол формы с адресом
+  private createAddressGroup(): FormGroup<IAddressGroup> {
+    return this.fb.nonNullable.group({
+      streetAddress: ['', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      postalCode: ['', Validators.required],
+      addressType: ['', Validators.required],
     });
   }
 }

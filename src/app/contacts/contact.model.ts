@@ -9,7 +9,7 @@ export interface Contact {
   dateOfBirth: Date | null;
   favoritesRanking: number | null;
   phones: Phone[];
-  address: Address;
+  addresses: Address[];
   notes: string;
 }
 
@@ -29,6 +29,14 @@ export interface Address {
   state: string;
   postalCode: string;
   addressType: string;
+}
+
+export interface IAddressGroup {
+  streetAddress: FormControl<string>;
+  city: FormControl<string>;
+  state: FormControl<string>;
+  postalCode: FormControl<string>;
+  addressType: FormControl<string>;
 }
 
 export interface IPhoneType {

@@ -18,13 +18,22 @@ export class InMemoryContactsApi implements InMemoryDbService {
             phoneType: 'mobile',
           },
         ],
-        address: {
-          streetAddress: '777 Whimsy Lane',
-          city: 'Gleeberg City',
-          state: 'Colohoma',
-          postalCode: 'A4321',
-          addressType: 'home',
-        },
+        addresses: [
+          {
+            streetAddress: '777 Whimsy Lane',
+            city: 'Gleeberg City',
+            state: 'Colohoma',
+            postalCode: 'A4321',
+            addressType: 'home',
+          },
+          {
+            streetAddress: '888 Whimsy Lane',
+            city: 'Booberg City',
+            state: 'Bolohoma',
+            postalCode: 'A4324',
+            addressType: 'work',
+          },
+        ],
         notes: '',
       },
       {
@@ -41,13 +50,15 @@ export class InMemoryContactsApi implements InMemoryDbService {
             phoneType: 'mobile',
           },
         ],
-        address: {
-          streetAddress: '543 Lullaby Lane',
-          city: 'Sleepytown',
-          state: 'Ulaska',
-          postalCode: 'F2231',
-          addressType: 'other',
-        },
+        addresses: [
+          {
+            streetAddress: '543 Lullaby Lane',
+            city: 'Sleepytown',
+            state: 'Ulaska',
+            postalCode: 'F2231',
+            addressType: 'other',
+          },
+        ],
         notes: '',
       },
       {
@@ -68,13 +79,15 @@ export class InMemoryContactsApi implements InMemoryDbService {
             phoneType: 'work',
           },
         ],
-        address: {
-          streetAddress: '123 Merriment Avenue',
-          city: 'Dorado City',
-          state: 'Mezona',
-          postalCode: 'Z2345',
-          addressType: 'work',
-        },
+        addresses: [
+          {
+            streetAddress: '123 Merriment Avenue',
+            city: 'Dorado City',
+            state: 'Mezona',
+            postalCode: 'Z2345',
+            addressType: 'work',
+          },
+        ],
         notes: '',
       },
     ];

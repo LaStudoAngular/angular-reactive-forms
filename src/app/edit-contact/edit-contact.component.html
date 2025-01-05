@@ -81,34 +81,44 @@
     </section>
 
     <section>
-      <nav>Address</nav>
-      <div>
-        <div
-          formGroupName="address"
-          class="address"
-          [class.error]="contactForm.controls.address.invalid"
-        >
-          <div class="flex-group">
-            <input formControlName="streetAddress" placeholder="Address" />
-            <img src="/assets/plus-grey-blue.png" class="add" />
+      <nav>Addresses</nav>
+      <div formArrayName="addresses">
+        <div *ngFor="let address of contactForm.controls.addresses.controls; let idx=index">
+          <div
+            [formGroupName]="idx"
+            class="address"
+            [class.error]="contactForm.controls.addresses.controls[idx].invalid"
+          >
+            <div class="flex-group">
+              <input
+                formControlName="streetAddress"
+                placeholder="Address"
+              />
+              <img
+                src="/assets/plus-grey-blue.png"
+                class="add"
+                (click)="addAddressControl()"
+              />
+            </div>
+            <input formControlName="city" placeholder="City" />
+            <input formControlName="state" placeholder="State/Region" />
+            <input formControlName="postalCode" placeholder="Zip/Postal Code" />
+            <select formControlName="addressType">
+              <option
+                *ngFor="let addressType of addressTypes; trackBy: typeTracker"
+                [value]="addressType.value"
+              >
+                {{ addressType.title }}
+              </option>
+            </select>
           </div>
-          <input formControlName="city" placeholder="City" />
-          <input formControlName="state" placeholder="State/Region" />
-          <input formControlName="postalCode" placeholder="Zip/Postal Code" />
-          <select formControlName="addressType">
-            <option
-              *ngFor="let addressType of addressTypes; trackBy: typeTracker"
-              [value]="addressType.value"
-            >
-              {{ addressType.title }}
-            </option>
-          </select>
+          <em *ngIf="contactForm.controls.addresses.controls[idx].invalid && contactForm.controls.addresses.controls[idx].dirty"
+            >Address in not complete!</em
+          >
         </div>
-        <em *ngIf="contactForm.controls.address.invalid && contactForm.controls.address.dirty"
-          >Address in not complete!</em
-        >
       </div>
     </section>
+
     <section>
       <nav>Notes</nav>
       <div>
