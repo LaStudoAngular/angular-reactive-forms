@@ -7,16 +7,16 @@
         <con-profile-icon-selector formControlName="icon" />
         <ng-container>
           <input
-            [class.error]="firstNameControl.invalid && firstNameControl.touched"
+            [class.error]="contactForm.controls.firstName.invalid"
             formControlName="firstName"
             placeholder="First Name"
           />
           <em
-            *ngIf="firstNameControl.errors?.['required'] && firstNameControl.touched"
+            *ngIf="contactForm.controls.firstName.errors?.['required'] && contactForm.controls.firstName.touched"
             >Please enter a first name</em
           >
           <em
-            *ngIf="firstNameControl.errors?.['minlength'] && firstNameControl.touched"
+            *ngIf="contactForm.controls.firstName.errors?.['minlength'] && contactForm.controls.firstName.touched"
             >Field must contains at least 3 characters</em
           >
         </ng-container>
@@ -86,7 +86,7 @@
         <div
           formGroupName="address"
           class="address"
-          [class.error]="addressControl.invalid && addressControl.dirty"
+          [class.error]="contactForm.controls.address.invalid"
         >
           <div class="flex-group">
             <input formControlName="streetAddress" placeholder="Address" />
@@ -104,7 +104,7 @@
             </option>
           </select>
         </div>
-        <em *ngIf="addressControl.invalid && addressControl.dirty"
+        <em *ngIf="contactForm.controls.address.invalid && contactForm.controls.address.dirty"
           >Address in not complete!</em
         >
       </div>
@@ -118,11 +118,11 @@
           rows="6"
           formControlName="notes"
           placeholder="Notes"
-          [class.error]="notesControl.invalid"
+          [class.error]="contactForm.controls.notes.invalid"
         ></textarea>
-        <em *ngIf="notesControl.errors?.['restricted']"
+        <em *ngIf="contactForm.controls.notes.errors?.['restricted']"
           >Restricted words found:
-          {{ notesControl.errors?.['restricted'] }}!</em
+          {{ contactForm.controls.notes.errors?.['restricted'] }}!</em
         >
       </div>
     </section>

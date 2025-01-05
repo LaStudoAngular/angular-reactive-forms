@@ -62,18 +62,6 @@ export class EditContactComponent implements OnInit {
     this.contactForm.controls.phones.push(this.createPhoneGroup());
   }
 
-  public get firstNameControl(): FormControl {
-    return this.contactForm.get('firstName') as FormControl;
-  }
-
-  public get addressControl(): FormControl {
-    return this.contactForm.get(['address']) as FormControl;
-  }
-
-  public get notesControl(): FormControl {
-    return this.contactForm.get(['notes']) as FormControl;
-  }
-
   public typeTracker(_: number, type: TypeTracker): string {
     return type.title;
   }
