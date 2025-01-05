@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContactsService } from '../contacts/contacts.service';
+import { distinctUntilChanged } from 'rxjs';
 import {
   Contact,
   IAddressGroup,
   IAddressType,
   IPhoneGroup,
   IPhoneType,
+  Phone,
 } from '../contacts/contact.model';
 import { restrictedWordsValidator } from '../validators/restricted-words.validator';
 
@@ -84,10 +86,27 @@ export class EditContactComponent implements OnInit {
 
   // создаем контрол формы с телефоном
   private createPhoneGroup(): FormGroup<IPhoneGroup> {
-    return this.fb.nonNullable.group({
+    const phoneGroup: Phone = {
       phoneNumber: '',
       phoneType: '',
-    });
+      phonePreferred: false,
+    };
+
+    const formGroup = this.fb.nonNullable.group(phoneGroup);
+    formGroup.controls.phonePreferred.valueChanges
+      .pipe(distinctUntilChanged((a: boolean, b: boolean) => a === b))
+      .subscribe((value: boolean) => {
+        if (value) {
+          formGroup.controls.phoneNumber.addValidators([Validators.required]);
+        } else {
+          formGroup.controls.phoneNumber.removeValidators([
+            Validators.required,
+          ]);
+        }
+        formGroup.controls.phoneNumber.updateValueAndValidity();
+      });
+
+    return formGroup;
   }
 
   // создаем контрол формы с адресом

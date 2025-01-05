@@ -16,6 +16,7 @@ export class InMemoryContactsApi implements InMemoryDbService {
           {
             phoneNumber: '555-765-4321',
             phoneType: 'mobile',
+            phonePreferred: false,
           },
         ],
         addresses: [
@@ -48,6 +49,7 @@ export class InMemoryContactsApi implements InMemoryDbService {
           {
             phoneNumber: '555-877-5678',
             phoneType: 'mobile',
+            phonePreferred: false,
           },
         ],
         addresses: [
@@ -73,10 +75,12 @@ export class InMemoryContactsApi implements InMemoryDbService {
           {
             phoneNumber: '555-123-4567',
             phoneType: 'mobile',
+            phonePreferred: false,
           },
           {
             phoneNumber: '555-321-6789',
             phoneType: 'work',
+            phonePreferred: false,
           },
         ],
         addresses: [

@@ -66,6 +66,7 @@
               (click)="addPhoneControl()"
             />
           </div>
+          <em *ngIf="phone.controls.phoneNumber.invalid">Preferred phone is required!</em>
           <div class="radio">
             <ng-container *ngFor="let phoneType of phoneTypes; trackBy: typeTracker">
               <input
@@ -75,6 +76,9 @@
               />
               {{ phoneType.title }}
             </ng-container>
+          </div>
+          <div class="preferred">
+            Preferred: <input type="checkbox" formControlName="phonePreferred" />
           </div>
         </div>
       </div>

@@ -16,11 +16,13 @@ export interface Contact {
 export interface Phone {
   phoneNumber: string;
   phoneType: string;
+  phonePreferred: boolean;
 }
 
 export interface IPhoneGroup {
   phoneNumber: FormControl<string>;
   phoneType: FormControl<string>;
+  phonePreferred: FormControl<boolean>;
 }
 
 export interface Address {
