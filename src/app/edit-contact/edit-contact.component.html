@@ -50,23 +50,32 @@
     </section>
 
     <section>
-      <nav>Phone</nav>
-      <div formGroupName="phone" class="flex-column">
-        <div class="flex-group">
-          <input formControlName="phoneNumber" placeholder="Phone" />
-          <img src="/assets/plus-grey-blue.png" class="add" />
-        </div>
-        <div class="radio">
-          <ng-container
-            *ngFor="let phoneType of phoneTypes; trackBy: typeTracker"
-          >
-            <input
-              formControlName="phoneType"
-              type="radio"
-              [value]="phoneType.value"
+      <nav>Phones</nav>
+      <div formArrayName="phones">
+        <div
+          *ngFor="let phone of contactForm.controls.phones.controls; let idx=index"
+          [formGroupName]="idx"
+          class="flex-column"
+        >
+          <div class="flex-group">
+            <input formControlName="phoneNumber" placeholder="Phone" />
+            <img
+              src="/assets/plus-grey-blue.png"
+              class="add"
+              title="Add new phone"
+              (click)="addControl()"
             />
-            {{ phoneType.title }}
-          </ng-container>
+          </div>
+          <div class="radio">
+            <ng-container *ngFor="let phoneType of phoneTypes; trackBy: typeTracker">
+              <input
+                formControlName="phoneType"
+                type="radio"
+                [value]="phoneType.value"
+              />
+              {{ phoneType.title }}
+            </ng-container>
+          </div>
         </div>
       </div>
     </section>

@@ -40,7 +40,6 @@ export class ProfileIconSelectorComponent implements ControlValueAccessor {
   }
 
   writeValue(icon: string): void {
-    console.log('writeValue icon', icon);
     this.selectedIcon = icon;
     this.showAllIcons.set(icon && icon !== '' ? false : true);
   }

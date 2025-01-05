@@ -30,10 +30,7 @@ export class EditContactComponent implements OnInit {
     lastName: '',
     dateOfBirth: <Date | null>null,
     favoritesRanking: <number | null>null,
-    phone: this.fb.nonNullable.group({
-      phoneNumber: '',
-      phoneType: '',
-    }),
+    phones: this.fb.array([this.createPhoneGroup()]),
     address: this.fb.nonNullable.group({
       streetAddress: ['', Validators.required],
       city: ['', Validators.required],
@@ -53,8 +50,16 @@ export class EditContactComponent implements OnInit {
       .subscribe((contact: Contact | undefined) => {
         if (!contact) return;
 
+        for (let i = 0; i < contact.phones.length - 1; i += 1) {
+          this.addControl();
+        }
+
         this.contactForm.setValue(contact);
       });
+  }
+
+  public addControl(): void {
+    this.contactForm.controls.phones.push(this.createPhoneGroup());
   }
 
   public get firstNameControl(): FormControl {
@@ -81,6 +86,13 @@ export class EditContactComponent implements OnInit {
 
     this.contactsService.saveContact(this.contactForm.getRawValue()).subscribe({
       next: () => this.router.navigate(['/contacts']),
+    });
+  }
+
+  private createPhoneGroup() {
+    return this.fb.nonNullable.group({
+      phoneNumber: '',
+      phoneType: '',
     });
   }
 }
