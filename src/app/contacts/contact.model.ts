@@ -1,3 +1,5 @@
+import { FormControl } from '@angular/forms';
+
 export interface Contact {
   id: string;
   icon: string;
@@ -14,6 +16,11 @@ export interface Contact {
 export interface Phone {
   phoneNumber: string;
   phoneType: string;
+}
+
+export interface IPhoneGroup {
+  phoneNumber: FormControl<string>;
+  phoneType: FormControl<string>;
 }
 
 export interface Address {

@@ -1,8 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContactsService } from '../contacts/contacts.service';
-import { Contact, IAddressType, IPhoneType } from '../contacts/contact.model';
+import {
+  Contact,
+  IAddressType,
+  IPhoneGroup,
+  IPhoneType,
+} from '../contacts/contact.model';
 import { restrictedWordsValidator } from '../validators/restricted-words.validator';
 
 type TypeTracker = IPhoneType | IAddressType;
@@ -30,7 +40,7 @@ export class EditContactComponent implements OnInit {
     lastName: '',
     dateOfBirth: <Date | null>null,
     favoritesRanking: <number | null>null,
-    phones: this.fb.array([this.createPhoneGroup()]),
+    phones: this.fb.array<FormGroup<IPhoneGroup>>([]),
     address: this.fb.nonNullable.group({
       streetAddress: ['', Validators.required],
       city: ['', Validators.required],
@@ -50,15 +60,15 @@ export class EditContactComponent implements OnInit {
       .subscribe((contact: Contact | undefined) => {
         if (!contact) return;
 
-        for (let i = 0; i < contact.phones.length - 1; i += 1) {
-          this.addControl();
-        }
+        // динамически добавляем в form array контролы из модели
+        contact.phones.forEach(() => this.addPhoneControl());
 
+        // заполняем все контролы формы данными из модели
         this.contactForm.setValue(contact);
       });
   }
 
-  public addControl(): void {
+  public addPhoneControl(): void {
     this.contactForm.controls.phones.push(this.createPhoneGroup());
   }
 
@@ -77,7 +87,8 @@ export class EditContactComponent implements OnInit {
     });
   }
 
-  private createPhoneGroup() {
+  // создаем контрол формы с телефоном
+  private createPhoneGroup(): FormGroup<IPhoneGroup> {
     return this.fb.nonNullable.group({
       phoneNumber: '',
       phoneType: '',
